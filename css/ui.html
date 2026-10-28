@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /* 画像として書き出すために、背景は透明（transparent）にしておく */
+    body {
+        background: transparent;
+        padding: 50px;
+    }
+
+    /* ここがゲームに持ち込むステータスパネルのデザイン！ */
+    .status-panel {
+        width: 750px;  /* DXライブラリのWIDTHと同じか少し小さめ */
+        height: 100px;
+        
+        /* CSSならではの美しいグラデーションと半透明 */
+        background: linear-gradient(135deg, rgba(40, 45, 55, 0.85), rgba(15, 20, 25, 0.95));
+        
+        /* 角丸と光沢感のある枠線 */
+        border-radius: 12px;
+        border-top: 2px solid rgba(255, 255, 255, 0.2);
+        border-left: 2px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.8);
+        border-right: 2px solid rgba(0, 0, 0, 0.8);
+
+        /* ドロップシャドウ */
+        box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.6);
+    }
+</style>
+</head>
+<body>
+    <div class="status-panel"></div>
+</body>
+</html>
