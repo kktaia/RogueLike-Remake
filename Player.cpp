@@ -34,16 +34,21 @@ Player::Player() {
 }
 
 bool Player::act(Field& field) {
-	auto dest = Input::GetWay();
-
-	if (dest.has_value())
-		return move(field, dest.value());
-	else {
-		currentAnim = AnimState::IDLE;
-		animator.reset();
-
+	if (isMoving) {
+		updateMovement();
 		return false;
 	}
+
+	auto dest = Input::GetWay();
+
+	if (dest.has_value()) {
+		return move(field, dest.value());
+	}
+	
+	currentAnim = AnimState::IDLE;
+	animator.reset();
+
+	return false;
 }
 
 void Player::onTurnProcess() {

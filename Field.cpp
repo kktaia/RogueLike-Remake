@@ -32,7 +32,7 @@ void Field::generateField()
 		row.fill(ImageID::NONE);
 	}
 
-	areas.push_back(Area{ 0, 0, F_WIDTH, F_HEIGHT, nullopt });
+	areas.push_back(Area{ 0, 0, F_WIDTH, F_HEIGHT, std::nullopt });
 
 	auto splitArea = [&](auto& self,size_t index,int depth) {
 		if (depth == 0)return;
@@ -80,7 +80,7 @@ void Field::generateField()
 			w = oldArea.w;
 			h = areas[index].h - oldArea.h;
 		}
-		newArea = { x,y,w,h,nullopt };
+		newArea = { x,y,w,h,std::nullopt };
 
 		areas[index] = oldArea;
 		areas.push_back(newArea);

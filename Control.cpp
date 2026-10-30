@@ -90,6 +90,9 @@ void Control::update()
 			return;
 		}
 		//階段メニューを開く
+		if (player->pos != field->stairsPos) {
+			player->hasCheckStairs = false;
+		}
 		if (!player->isMoving && player->pos == field->stairsPos && !player->hasCheckStairs) {
 			state = GameState::MENU;
 

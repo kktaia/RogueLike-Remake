@@ -32,48 +32,49 @@ public:
 
 	bool move(Field& field, WAY dest) {
 		if (isMoving) {
-			Vector2 targetPos = pos * PIXEL;
-			int speed = 2;
-
-			Vector2 diff = targetPos - pixelPos;
-			if (diff.abs().x <= speed && diff.abs().y <= speed) {
-				pixelPos = targetPos;
-			}
-			else {
-				pixelPos += diff.sign() * speed;
-			}
-
-			if (pixelPos != targetPos) {
-				currentAnim = AnimState::WALK;
-				animator.update();
-
-				return false; // 移動中は入力を受け付けない
-			}
-
-			isMoving = false;
+			return false;
 		}
-
-		Vector2 nextPos = pos;
+		
 
 		//入力に応じて移動先を決定
-		nextPos += Vector2::WAY4()[(int)dest];
 		way = dest;
+		Vector2 nextPos = pos + Vector2::WAY4()[static_cast<int>(dest)];
 
-		//移動先が床なら移動
-		if (field.getTile(nextPos) == ImageID::FLOOR) {
-			pos = nextPos;
-			isMoving = true;
-			currentAnim = AnimState::WALK;
-			animator.update();
+		//移動先が床じゃなければ移動できない
+		if (field.getTile(nextPos) != ImageID::FLOOR) {
+			currentAnim = AnimState::IDLE;
+			animator.reset();
 
-			return true;
+			return false;
 		}
-		else {
+
+		pos = nextPos;
+		isMoving = true;
+		currentAnim = AnimState::WALK;
+		animator.update();
+
+		return true;
+	}
+
+	void updateMovement() {
+		if (!isMoving) {
+			return;
+		}
+		
+		Vector2 targetPos = pos * PIXEL;
+		Vector2 diff = targetPos - pixelPos;
+		const int speed = 2;
+
+		if (diff.abs().x <= speed && diff.abs().y <= speed) {
+			pixelPos = targetPos;
+			isMoving = false;
 			currentAnim = AnimState::IDLE;
 			animator.reset();
 		}
-
-		return false;
+		else {
+			pixelPos += diff.sign() * speed;
+			animator.update();
+		}
 	}
 
 	int getCurrentImage() {
